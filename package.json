@@ -1,0 +1,21 @@
+{
+  "name": "learn-system-design",
+  "version": "1.0.0",
+  "description": "An exhaustive, production-grade system design & distributed systems architecture masterclass.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/system-design.test.mjs"
+  },
+  "keywords": [
+    "system-design",
+    "distributed-systems",
+    "architecture",
+    "scalability",
+    "load-balancing",
+    "caching",
+    "microservices"
+  ],
+  "author": "Manthan Ank",
+  "license": "MIT"
+}
