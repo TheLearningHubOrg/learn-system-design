@@ -1,7 +1,26 @@
-node_modules/
-dist/
-coverage/
+# Go
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+coverage.*
+
+# Editors and OS
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+*.swp
 .DS_Store
-*.log
+Thumbs.db
+
+# Env files (never commit secrets)
 .env
-.env.local
+.env.*
+!.env.example
+
+# Kept from the previous Node starter
+node_modules/
+coverage/
+*.log

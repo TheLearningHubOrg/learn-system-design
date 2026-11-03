@@ -1,13 +1,17 @@
-# Multi-stage Dockerfile for learn-system-design
-FROM node:22-alpine AS builder
-WORKDIR /app
-COPY package.json ./
-COPY src/ ./src/
-COPY tests/ ./tests/
-RUN npm test
+# learn-system-design starter: Go HTTP service compiled to a static binary on a distroless base.
 
-FROM node:22-alpine AS runner
-WORKDIR /app
-COPY --from=builder /app /app
-USER node
-CMD ["node", "src/index.mjs"]
+# ---- build ------------------------------------------------------------------
+FROM golang:1.26-alpine AS build
+WORKDIR /src
+COPY go.mod go.sum* ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/app ./cmd/server
+
+# ---- runtime: no shell, no package manager, runs as uid 65532 ---------------
+FROM gcr.io/distroless/static-debian12:nonroot AS runtime
+COPY --from=build /out/app /app
+ENV PORT=8080
+EXPOSE 8080
+USER nonroot:nonroot
+ENTRYPOINT ["/app"]
